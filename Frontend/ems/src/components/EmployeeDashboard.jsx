@@ -7,7 +7,7 @@ const EmployeeDashboard = ({data}) => {
     const cards=[
         {
             icon:Calendar1Icon,
-            value:data.currentMonthAttendence,
+            value:data.currentMonthAttendance,
             title:"Days Present",
             subtitle:"This month",
         
@@ -52,7 +52,7 @@ const EmployeeDashboard = ({data}) => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3">
-                    <Link to="/attendance" className='btn-primary text-center inline-flex items-center justify-center gap-2'>
+                    <Link to="/attendence" className='btn-primary text-center inline-flex items-center justify-center gap-2'>
                         Mark Attendance <ArrowRightIcon className="w-4 h-4" />
                     </Link>
 
