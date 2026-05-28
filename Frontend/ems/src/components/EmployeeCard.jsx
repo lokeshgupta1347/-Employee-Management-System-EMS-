@@ -2,7 +2,7 @@ import React from 'react'
 import { PencilIcon,Trash2Icon } from 'lucide-react'
 
 
-const EmployeeCard = ({employee}) => {
+const EmployeeCard = ({employee,onEdit}) => {
 
     const handleDelete=async ()=>{
         if(!confirm("Are you sure you want to delete this employee?"))
@@ -13,7 +13,7 @@ const EmployeeCard = ({employee}) => {
   return (
     <div className='group relative card card-hover overflow-hidden'>
 
-    <div className='relative aspect-4/3 w-full overdflow-hidden bg-linear-to-br from-slate-100 to-slate-50'>
+    <div className='relative aspect-4/3 w-full overflow-hidden bg-linear-to-br from-slate-100 to-slate-50'>
             {/* circle icons */}
             <div className='w-full h-full flex items-center justify-center'>
             {/* circle icons  */}
@@ -38,8 +38,7 @@ const EmployeeCard = ({employee}) => {
         </div>
 
         {!employee.isDeleted && (
-            <div className='absolute inset-0 bg-linear-to-t from-indigo-700/
-            20 via-transparent to-transparent opacity-0
+            <div className='absolute inset-0 bg-linear-to-t from-indigo-700/20 via-transparent to-transparent opacity-0
             group-hover:opacity-100 transition-opacity flex items-end
             justify-center pb-6 gap-3'>
                 <button onClick={()=>onEdit(employee) } className='p-2.5 bg-white/90 backdrop-blur-sm 
