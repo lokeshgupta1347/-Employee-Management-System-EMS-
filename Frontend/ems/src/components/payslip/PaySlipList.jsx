@@ -1,5 +1,4 @@
 import { format } from 'date-fns'
-import React from 'react'
 import { Download } from 'lucide-react'
 
 const PaySlipList = ({payslips,isAdmin}) => {
