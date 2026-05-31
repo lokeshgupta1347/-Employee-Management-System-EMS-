@@ -1,6 +1,6 @@
 
 import Attendance from "../models/Attendance.js";
-import Employee from "../models/employee.js";
+import Employee from "../models/Employee.js";
 import LeaveApplication from "../models/LeaveApplication.js";
 import {DEPARTMENTS} from "../constants/departments.js"
 import Payslip from "../models/Payslip.js";
