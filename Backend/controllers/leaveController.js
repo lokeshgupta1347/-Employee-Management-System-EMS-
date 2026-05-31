@@ -2,7 +2,7 @@
 
 //Create leaves
 
-import Employee from "../models/Employee";
+import Employee from "../models/Employee.js";
 
 //POST /api/leaves
 export const createLeaves=async(req,res)=>{
