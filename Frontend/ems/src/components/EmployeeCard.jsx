@@ -4,7 +4,7 @@ import api from '../api/axios';
 import toast from 'react-hot-toast';
 
 
-const EmployeeCard = ({employee,onEdit}) => {
+const EmployeeCard = ({employee,onEdit, onDelete}) => {
 
     const handleDelete=async ()=>{
         if(!confirm("Are you sure you want to delete this employee?"))

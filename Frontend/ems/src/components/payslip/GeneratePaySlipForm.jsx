@@ -20,6 +20,7 @@ const GeneratePaySlipForm = ({employees,onSuccess}) => {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries())
         try {
@@ -29,7 +30,9 @@ const GeneratePaySlipForm = ({employees,onSuccess}) => {
         } catch (err) {
             toast.error(err.response?.data?.error || err.message);
         }
-        setLoading(false);
+        finally{
+            setLoading(false);
+        }
         
     }
 

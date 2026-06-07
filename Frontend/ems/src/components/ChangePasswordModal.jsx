@@ -8,7 +8,7 @@ const ChangePasswordModal = ({open , onClose}) => {
   const [message ,setmessage]=useState({type:"",text:""})
 
   const handleSubmit=async (e)=>{
-    e.preventdefault();
+    e.preventDefault();
     
         setloading(true);
         setmessage("");

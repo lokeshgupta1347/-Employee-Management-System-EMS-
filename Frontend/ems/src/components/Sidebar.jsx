@@ -15,7 +15,11 @@ const Sidebar = () => {
     useEffect(()=>{
         api.get("/profile").then(({data}) => {
       if (data.firstName) setusername(`${data.firstName} ${data.lastName || ""}`.trim());
-    })
+    }) .catch((error) => {
+         console.error('Failed to fetch profile:', error);
+         // Optionally show a toast or set a fallback username
+         })
+ 
        
     },[])
 

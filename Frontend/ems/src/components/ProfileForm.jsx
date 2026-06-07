@@ -9,7 +9,7 @@ const ProfileForm = ({initialData,onSuccess}) => {
     const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        
         e.preventDefault();
         setLoading(true);
         setError("");
