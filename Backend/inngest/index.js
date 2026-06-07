@@ -30,8 +30,8 @@ const autoCheckOut = inngest.createFunction(
             subject:"Attendance Check-Out Remainder",
             body:`
                         <div style="max-width: 600px;">
-                            <h2>Hi ${emp.firstName}, 👋</h2>
-                            <p>You have a check-in in ${emp.department} today:</p>
+                            <h2>Hi ${employee.firstName}, 👋</h2>
+                            <p>You have a check-in in ${employee.department} today:</p>
                             <p style="font-size: 18px; font-weight: bold; color: #007bff; margin: 10px 0;">${attendance?.checkIn?.toLocaleTimeString()}</p>
                             <p style="font-size: 16px;">Please make sure to check out in one hour.</p>
                             <p style="font-size: 16px;">If you have any questions, please contact your admin.</p>
@@ -158,7 +158,7 @@ const attendanceReminderCron = inngest.createFunction(
             await step.run("send-reminder-emails", async () => {
                 const emailPromises = absentEmployees.map((emp) => {
                     // send email
-                    sendEmail({
+                   return sendEmail({
                         to:emp.email,
                         subject:`Attendance Reminder -Please Mark Your Attendance`,
                         body:`<div style="max-width: 600px; font-family:Arial,sans-serif">
