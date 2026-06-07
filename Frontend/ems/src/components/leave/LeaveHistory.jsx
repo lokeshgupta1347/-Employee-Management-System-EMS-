@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { format } from 'date-fns'
 import { Loader2,Check, X } from 'lucide-react'
+import api from '../../api/axios'
+import toast from 'react-hot-toast'
 
 const LeaveHistory = ({leaves,isAdmin,onUpdate}) => {
 
@@ -9,6 +11,15 @@ const LeaveHistory = ({leaves,isAdmin,onUpdate}) => {
     const handleStatusUpdate=async (id,status) =>
     {
         setprocessing(id)
+        try {
+            await api.patch(`/leave/${id}`,{status})
+            onUpdate();
+        } catch (error) {
+            toast.error(error?.response?.data?.error || error.message)  
+        }
+        finally{
+            setprocessing(null)
+        }
     }
 
 
