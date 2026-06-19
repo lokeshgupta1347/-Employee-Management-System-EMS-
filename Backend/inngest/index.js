@@ -49,7 +49,7 @@ const autoCheckOut = inngest.createFunction(
 if(!attendance?.checkOut){
     attendance.checkOut = new Date(attendance.checkIn).getTime() + 4 * 60 * 60 * 1000;
     attendance.workingHours=4;
-    attendance.datType="Half Day";
+    attendance.dayType="Half Day";
     attendance.status="LATE";
     await attendance.save();
 }
@@ -130,8 +130,8 @@ const attendanceReminderCron = inngest.createFunction(
         const onLeaveIds = await step.run("get-on-leave-ids", async () => {
             const leaves = await LeaveApplication.find({
                 status: "APPROVED",
-                startDate: { $lte: new Date(today.endUTC) },
-                endDate: { $gte: new Date(today.startUTC) },
+                startDate: { $lte: new Date(today.end) },
+                endDate: { $gte: new Date(today.start) },
             }).lean();
             return leaves.map((l) => l.employeeId.toString());
         });
@@ -158,7 +158,7 @@ const attendanceReminderCron = inngest.createFunction(
             await step.run("send-reminder-emails", async () => {
                 const emailPromises = absentEmployees.map((emp) => {
                     // send email
-                   return sendEmail({
+                     sendEmail({
                         to:emp.email,
                         subject:`Attendance Reminder -Please Mark Your Attendance`,
                         body:`<div style="max-width: 600px; font-family:Arial,sans-serif">
@@ -176,9 +176,12 @@ const attendanceReminderCron = inngest.createFunction(
 
 
                 })
+
+                await Promise.all(emailPromises)
+                return {emailSent:absentEmployees.length}
             })
         }
-        await Promise.all(emailPromises)
+        
         return { totalActive: activeEmployees.length, onLeave:
         onLeaveIds.length, checkedIn: checkedInIds.length,absent:absentEmployees.length }
 

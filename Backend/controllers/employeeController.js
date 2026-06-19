@@ -11,8 +11,8 @@ export const getEmployees=async (req,res)=>{
     const where = {};
     if (department) where.department = department;
 
-    const employees = await Employee.find(where).sort(
-      ({createdAt: -1})).populate("userId", "email role").lean();
+    const employees = await Employee.find({...where, isDeleted: { $ne: true }}).sort
+      ({createdAt: -1}).populate("userId", "email role").lean();
 
     const result = employees.map((emp) => ({
       ...emp,
@@ -40,8 +40,13 @@ export const createEmployees=async (req,res)=>{
       department, basicSalary, allowances, deductions, joinDate,
       password, role, bio } = req.body;
 
-    if(!email || !password || !firstName || !lastName){
+    if(!email || !password || !firstName || !lastName || !position || !joinDate){
         return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const parsedJoinDate = new Date(joinDate);
+    if(isNaN(parsedJoinDate.getTime())){
+        return res.status(400).json({ error: "Invalid join date" });
     }
 
     const hashed=await bcrypt.hash(password,10)
@@ -50,20 +55,27 @@ export const createEmployees=async (req,res)=>{
         role:role || "EMPLOYEE"
     })
 
-    const employee = await Employee.create({
-      userId: user._id,
-      firstName,
-      lastName,
-      email,
-      phone,
-      position,
-      department: department || "Engineering",
-      basicSalary:Number(basicSalary) || 0,
-      deductions:Number(deductions) || 0,
-      joinDate:new Date(joinDate),
-      bio: bio || "",
-
-    })
+    let employee;
+    try {
+        employee = await Employee.create({
+          userId: user._id,
+          firstName,
+          lastName,
+          email,
+          phone,
+          position,
+          department: department || "Engineering",
+          basicSalary:Number(basicSalary) || 0,
+          allowances:Number(allowances) || 0,
+          deductions:Number(deductions) || 0,
+          joinDate: parsedJoinDate,
+          bio: bio || "",
+        })
+    } catch(empError) {
+        // Rollback: delete the user if employee creation fails
+        await User.findByIdAndDelete(user._id);
+        throw empError;
+    }
 
     return res.status(201).json({success:true,employee})
 

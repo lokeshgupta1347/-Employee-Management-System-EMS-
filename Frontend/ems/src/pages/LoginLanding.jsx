@@ -1,4 +1,4 @@
-import React from 'react'
+
 import LoginLeftSide from '../components/LoginLeftSide'
 import { ArrowRightIcon, ShieldIcon, UserIcon } from 'lucide-react'
 import { Link, Navigate } from 'react-router-dom'
