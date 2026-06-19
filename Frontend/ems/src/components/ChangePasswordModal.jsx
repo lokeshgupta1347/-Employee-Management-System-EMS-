@@ -11,21 +11,22 @@ const ChangePasswordModal = ({open , onClose}) => {
     e.preventDefault();
     
         setloading(true);
-        setmessage("");
-        const formData = new FormData(e.currentTarget);
+        setmessage({type:"",text:""});
+        const form = e.currentTarget;
+        const formData = new FormData(form);
         const currentPassword=formData.get("currentPassword");
         const newPassword=formData.get("newPassword")
 
         try {
-            const { data } = await api.post("/auth/change-password", {
+            const { data } = await api.put("/auth/change-password", {
                 currentPassword,
                 newPassword
             });
             if (!data.success) throw new Error(data.error || "Failed");
             setmessage({type:"success",text:"Password updated successfully"})
-            e.currentTarget.reset();
+            form.reset();
         } catch (error) {
-            setmessage({ type: "error", text: error.message });
+            setmessage({ type: "error", text: error.response?.data?.error || error.message });
         } finally {
             setloading(false);
         }

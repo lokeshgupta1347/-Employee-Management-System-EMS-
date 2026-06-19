@@ -107,7 +107,7 @@ const Sidebar = () => {
 
 
                             {isActive && <div className='absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-indigo-500'/>}
-                            <item.icon className='{`w-[17px] h-[17px] shrink-0 ${isActive ? "text-indigo-300" : "text-slate-400 group-hover:text-slate-300"}`}'/>
+                            <item.icon className={`w-[17px] h-[17px] shrink-0 ${isActive ? "text-indigo-300" : "text-slate-400 group-hover:text-slate-300"}`}/>
                             <span className='flex-1'>{item.name}</span>
                             {isActive && <ChevronRightIcon/>}
                         </Link>

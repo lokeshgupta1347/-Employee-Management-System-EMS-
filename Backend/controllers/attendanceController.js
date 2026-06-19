@@ -19,7 +19,7 @@ export const clockInOut=async(req,res)=>{
         today.setHours(0,0,0,0);
 
         const existing =await Attendance.findOne({
-            employeeId:employee_.id,
+            employeeId:employee._id,
             date:today,
         })
 
@@ -35,9 +35,12 @@ export const clockInOut=async(req,res)=>{
         })
 
         await inngest.send({
-            name:"employee._id",
-            attendanceId:attendance._id
-        })
+           name: "employee/check-out",
+           data: {
+                 employeeId: employee._id,
+                 attendanceId: attendance._id
+                }
+})
 
 
 
@@ -62,11 +65,11 @@ export const clockInOut=async(req,res)=>{
         existing.dayType=dayType;
 
         await existing.save();
-        return res.join({success:true,type:"CHECK_OUT",date:existing})
+        return res.json({success:true,type:"CHECK_OUT",date:existing})
 
         }
         else{
-            return res.join({success:true,type:"CHECK_OUT",date:existing})
+            return res.json({success:true, type:"ALREADY_CHECKED_OUT", data:existing})
 
         }
         

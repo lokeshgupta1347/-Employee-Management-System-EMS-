@@ -4,6 +4,7 @@
 
 import { inngest } from "../inngest/index.js";
 import Employee from "../models/Employee.js";
+import LeaveApplication from "../models/LeaveApplication.js";
 
 //POST /api/leaves
 export const createLeaves=async(req,res)=>{
@@ -16,6 +17,8 @@ export const createLeaves=async(req,res)=>{
                 error:"Your account is deactivated . You cannot apply for leave."
             })
         }
+
+        const { type, startDate, endDate, reason } = req.body;
 
         if (!type || !startDate || !endDate || !reason) {
             return res.status(400).json({ error: "Missing fields" });

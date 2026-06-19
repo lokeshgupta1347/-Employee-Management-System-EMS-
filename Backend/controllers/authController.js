@@ -24,7 +24,7 @@ export const login = async (req, res) => {
         return res.status(401).json({error: "Not authorized as admin"})
     }
 
-    if(role_type==="employee" && user.role !=="employee"){
+    if(role_type==="employee" && user.role !=="EMPLOYEE"){
         return res.status(401).json({error: "Not authorized as employee"})
     }
 
@@ -40,6 +40,8 @@ export const login = async (req, res) => {
     }
 
     const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"7d"});
+
+    return res.json({user:payload,token})
 
 
 

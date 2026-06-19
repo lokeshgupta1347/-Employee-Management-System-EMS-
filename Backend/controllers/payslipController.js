@@ -1,3 +1,4 @@
+import Employee from "../models/Employee.js";
 import Payslip from "../models/Payslip.js";
 
 //Create payslip
@@ -27,7 +28,7 @@ export const createPayslip=async (req,res)=>{
 
         
     } catch (error) {
-        return res.status(300).json({error:"Failed"});
+        return res.status(500).json({error:"Failed"});
         
     }
 
@@ -66,7 +67,7 @@ export const getPayslips = async (req, res) => {
 
        
     } catch (error) {
-        return res.status(300).json({error:"Failed"});
+        return res.status(500).json({error:"Failed"});
     }
 }
 
